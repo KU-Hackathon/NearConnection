@@ -4,5 +4,5 @@
 
 ## Members
 @s6xybr8in 남관호 (팀장)  
-@motsuni04 박서진
+@motsuni04 박서진  
 @Chaesh156 채성현
