@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-void main() {
-  runApp(LoginApp());
-}
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart';
 
 class LoginApp extends StatelessWidget {
   @override
