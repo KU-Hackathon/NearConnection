@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'MyTheme.dart';
 import 'Screens/login.dart';
@@ -10,6 +9,7 @@ import 'Screens/postview.dart';
 
 
 void main() {
+  KakaoSdk.init(nativeAppKey: "d0f7fb41814be47b93fb15915412775a");
   runApp(const MyApp());
 }
 
