@@ -11,7 +11,7 @@ final THEME1 = ThemeData(
   )),
   appBarTheme: AppBarTheme(backgroundColor:Colors.lightBlueAccent.shade100,centerTitle: false,iconTheme: IconThemeData(size:30,color: Colors.white)), // 색갈 푸른색 제목 중앙
   textTheme: TextTheme(
-    titleLarge: TextStyle(fontFamily: "Aggro",fontSize: 37,fontWeight: FontWeight.normal), // title
+    titleLarge: TextStyle(fontFamily: "Aggro",fontSize: 32,fontWeight: FontWeight.normal), // title
     bodyMedium: TextStyle(fontFamily: "Pretendard",fontSize: 18,fontWeight: FontWeight.w500), // 기본
   ),
 

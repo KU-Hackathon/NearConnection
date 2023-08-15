@@ -14,7 +14,7 @@ class Bottom extends StatelessWidget {
           IconButton(onPressed: ()=> Navigator.pushNamed(context, '/MyPage'), icon: Icon(Icons.person)),
           IconButton(onPressed: ()=> Navigator.pushNamed(context, '/PostView'), icon: Icon(Icons.person)),
           IconButton(onPressed: ()=> Navigator.pushNamed(context, '/Login'), icon: Icon(Icons.person)),
-          IconButton(onPressed: ()=> Navigator.pushNamed(context, '/PostView'), icon: Icon(Icons.person)),
+          IconButton(onPressed: ()=> Navigator.pushNamed(context, '/PostView/OpenPost'), icon: Icon(Icons.person)),
         ],
       ),
     );

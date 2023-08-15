@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kwanho/Models/views.dart';
+import 'package:kwanho/Screens/postview.dart';
 import '../MyTheme.dart';
 import 'bottom.dart';
 class MainPage extends StatelessWidget {
@@ -29,7 +30,7 @@ class MainPage extends StatelessWidget {
 }
 
 class HotView extends StatefulWidget {
-  
+
   @override
   State<HotView> createState() => _HotViewState();
 }
@@ -44,9 +45,7 @@ class _HotViewState extends State<HotView> {
       //null not add
       //else Contents.add()
     }
-    Contents.add(new HOT(kind: "10대",thumbs: 27,Title: "그대라는 사치",Index: 32,Content: "ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라"));
-    Contents.add(new HOT(kind: "10대",thumbs: 27,Title: "그대라는 사치",Index: 32,Content: "ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라"));
-    Contents.add(new HOT(kind: "10대",thumbs: 27,Title: "그대라는 사치",Index: 32,Content: "ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라ㅇ라ㅇ라라"));
+
   }
 
   Widget build(BuildContext context) {
@@ -139,7 +138,7 @@ class _ViewsState extends State<Views> {
 
   Widget Frame(Text t) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0, right:10.0),
+      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
       child: Container(
           decoration: BoxDecoration(
             border: Border.all(width: 3),
@@ -151,33 +150,26 @@ class _ViewsState extends State<Views> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              t,
-              SizedBox(
-                height: 15,
-              ),
+              t, // title
+              SizedBox(height: 15),
               Expanded(
                 child: Container(
-                    child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                        itemCount: _viewnames.length * 2,
-                        itemBuilder: (context, index) {
-                          var realIndex = index ~/ 2;
-                          if (index.isOdd)
-                            return Divider();
-                          else
-                            return ListTile(
-                              title: Row(
-                                children: [
-                                  SizedBox(width: 120,child: TextTitle1("${_viewnames[realIndex]} 게시판")),
-                                  SizedBox(width: 10,),
-                                  SizedBox(width: 230,child: TEXT1("아니 진짜 이게 맞아 ㄹㅇ?dddddddddd??", 16))
-                                ],
-                              ),onTap: (){
-                                Navigator.pushNamed(context, '/PostView');
-                            },
-                            );
-                        }
-                        )
+                  child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _viewnames.length * 2,
+                    itemBuilder: (context, index) {
+                      var realIndex = index ~/ 2;
+                      if (index.isOdd)
+                        return Divider();
+                      else
+                        return ListTile(
+                          title: Row( children: [ SizedBox(width: 120,child: TextTitle1("${_viewnames[realIndex]} 게시판")),SizedBox(width: 10),SizedBox(width: 230,child: TEXT1("아니 진짜 이게 맞아 ㄹㅇ?dddddddddd??", 16),)]),
+                          onTap: (){
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PostViewPage(viewname: _viewnames[realIndex])));
+                          },
+                      );
+                    },
+                  ),
                 ),
               ),
             ],

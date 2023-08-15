@@ -3,17 +3,42 @@ import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   @override
+  Kakao _kakao = new Kakao();
+
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    KakaoSdk.init(nativeAppKey: "d0f7fb41814be47b93fb15915412775a");
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("로그인")),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text("${_kakao.get_islogined()}",style: TextStyle(fontSize: 30),),
+          Row(
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    _kakao.login();
+                  },
+                  child: Text("Login")),
+              ElevatedButton(onPressed: (){
+                _kakao.logout();
+              }, child: Text("Logout")),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -21,10 +46,13 @@ class _LoginPageState extends State<LoginPage> {
 class Kakao {
   bool _islogined = false;
 
-  bool get_islogined() {
-    return this._islogined;
+  String get_islogined() {
+    return this._islogined.toString();
   }
-
+  void logout() async{
+    _islogined = false;
+    print("logout");
+  }
   Future<void> login() async {
     if (await isKakaoTalkInstalled()) {
       try {
