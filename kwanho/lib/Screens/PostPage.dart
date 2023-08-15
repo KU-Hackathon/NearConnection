@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 class PostPage extends StatefulWidget{
-  const PostPage({Key? key}) : super(key: key);
-
   @override
   State<PostPage> createState() => _PostPageState();
 }
 
 class _PostPageState extends State<PostPage>{
+
   List<String> _ageType = ['선택','10대','20대','30대','40대','50대~'];
   String _ageDefault = '선택';
   bool _isCheckedAnonymity = false;

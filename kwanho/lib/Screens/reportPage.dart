@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:test1/OpenPost.dart';
+import 'package:kwanho/Screens/OpenPost.dart';
+
+import '../Models/post.dart';
+
 
 class ReportPage extends StatefulWidget{
-  const ReportPage({Key? key}) : super(key: key);
-
+  final Post post;
+  ReportPage({required this.post});
   @override
-  State<ReportPage> createState() => _ReportPageState();
+  State<ReportPage> createState() => _ReportPageState(post);
 }
 
 
 class _ReportPageState extends State<ReportPage> {
   List<String> _reportType = ['선택','욕설','비방','음란','허위','기타'];
   String _reportDefault = '선택';
-
+  Post _post;
+  _ReportPageState(this._post);
   Future<bool> _onBackPressed() async {
     return await showDialog(
         context: context,
@@ -40,7 +44,7 @@ class _ReportPageState extends State<ReportPage> {
               onPressed: (){
                 _onBackPressed();}
           ),
-          title: Text("신고 - 게시물 제목",
+          title: Text("신고 - ${_post.title}",
             style: TextStyle(fontFamily: 'Aggro',fontSize: 30),),
           backgroundColor: const Color(0xffb3e5fc),
         ),
@@ -95,7 +99,7 @@ class _ReportPageState extends State<ReportPage> {
                             side: BorderSide(color: Color(0xffdc3545)),
                             foregroundColor: Color(0xffdc3545)),
                         onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => OpenPost()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => OpenPost(post: _post)));
                         },
                         child: Text(
                           '신고',

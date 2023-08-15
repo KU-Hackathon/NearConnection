@@ -14,7 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    KakaoSdk.init(nativeAppKey: "d0f7fb41814be47b93fb15915412775a");
+    KakaoSdk.init(nativeAppKey: "d0f7fb41814be47b93fb15915412775a",javaScriptAppKey: "36ac06aa54383d60e693d8044663e5cd");
   }
 
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
 
 class Kakao {
   bool _islogined = false;
-
+  OAuthToken token;
   String get_islogined() {
     return this._islogined.toString();
   }
@@ -56,7 +56,7 @@ class Kakao {
   Future<void> login() async {
     if (await isKakaoTalkInstalled()) {
       try {
-        await UserApi.instance.loginWithKakaoTalk();
+        token = await UserApi.instance.loginWithKakaoTalk();
         print('카카오톡으로 로그인 성공');
         _islogined = true;
       } catch (error) {
@@ -69,7 +69,7 @@ class Kakao {
         }
         // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
         try {
-          await UserApi.instance.loginWithKakaoAccount();
+          token = await UserApi.instance.loginWithKakaoAccount();
           print('카카오계정으로 로그인 성공');
           _islogined = true;
         } catch (error) {

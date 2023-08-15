@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kwanho/Screens/OpenPost.dart';
-import 'package:kwanho/Screens/writepage.dart';
 
 import '../Models/post.dart';
 import '../MyTheme.dart';
+import 'PostPage.dart';
 
 
 
@@ -36,7 +36,7 @@ class _PostViewPageState extends State<PostViewPage> {
         if(index.isOdd) return Divider();
         else return ListTile( title: TextTitle1("${_posts[realIndex].title}"),
           subtitle: Column(children: [
-            TEXT1("${_posts[realIndex].contents}sdfasdfsadfasdfasdfasdfasfasdfasdfasdfasdfsddfasdfsdfsadfasd", 16),
+            TEXT1("${_posts[realIndex].contents}", 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -52,7 +52,7 @@ class _PostViewPageState extends State<PostViewPage> {
           },
         );
       },),
-      floatingActionButton: FloatingActionButton(backgroundColor: Colors.lightBlueAccent,onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>WritePage(viewname))),child: Icon(Icons.mode)),
+      floatingActionButton: FloatingActionButton(backgroundColor: Colors.lightBlueAccent,onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>PostPage())),child: Icon(Icons.mode)),
     );
   }
 }
