@@ -1,7 +1,6 @@
-
+import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:kwanho/Models/CommentRequest.dart';
 import 'package:kwanho/Models/PostRequest.dart';
 import '../Models/post.dart';
 import 'package:logger/logger.dart';
@@ -12,19 +11,14 @@ var logger = Logger(
   printer: PrettyPrinter(),
 );
 
-class CommentRequestController {
+class LikeRequestController {
 
-  Future<dynamic> commentRequest(List<dynamic> data) async{
-
-    CommentRequest dto = CommentRequest(postId: data[0], contents: data[1]);
-    print(dto.postId);
-    print(dto.contents);
-    return postComment(data: dto);
+  Future<dynamic> likeRequest(int postId) async{
+    return post(postId: postId);
   }
 
-  Future<dynamic> postComment({required CommentRequest data}) async {
-    String base_uri = "http://203.252.139.208:8000/api/comments/${data.postId}/?content=${data.contents}";
-    print(data.toJson());
+  Future<dynamic> post({required int postId}) async {
+    String base_uri = "http://203.252.139.208:8000/api/like/$postId/";
     try{
       http.Response _response = await http.post(
           Uri.parse(base_uri),

@@ -20,6 +20,34 @@ class PostPagination(PageNumberPagination):
     max_page_size = 40
 
 
+class BoardPreviewView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    @extend_schema(
+        parameters=[],
+        responses={
+            200: inline_serializer(
+                name='ss',
+                fields={
+                    '10': serializers.CharField(allow_null=True),
+                    '20': serializers.CharField(allow_null=True),
+                    '30': serializers.CharField(allow_null=True),
+                    '40': serializers.CharField(allow_null=True),
+                    '50': serializers.CharField(allow_null=True),
+                    '100': serializers.CharField(allow_null=True)
+                }
+            )
+        }
+    )
+    def get(self, request):
+        resp = {}
+        for c in Post.BoardChoices.choices:
+            query = Post.objects.filter(board=c[0]).order_by('-created_at')
+            resp[c[0]] = query[0].content_preview if query else None
+        print(resp)
+        return Response(resp, 200)
+
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer

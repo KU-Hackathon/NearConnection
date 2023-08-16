@@ -1,4 +1,3 @@
-import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
 import 'package:kwanho/Screens/postAllview.dart';
@@ -176,17 +175,9 @@ class _PostPageState extends State<PostPage>{
                                 List<String> tags = controllForTags.text.split("#");
                                 String age = _ageDefault.substring(0,2);
                                 List<dynamic> data = [controllForTitle.text,controllForContent.text,age,tags];
-                                bool isFailed = postRequestController.postRequest(data).isNull;
+                                postRequestController.postRequest(data);
                                 showDialog(context: context, builder: (BuildContext context){
-                                  return (isFailed) ?
-                                  AlertDialog(
-                                    title: Text("오류가 발생했습니다",
-                                      style: TextStyle(fontFamily: "Pretendard",fontSize: 20),),
-                                    actions: <Widget>[
-                                      TextButton(onPressed: () {Navigator.pop(context,false);},
-                                        child: Text("확인"),)
-                                    ],
-                                  ):
+                                  return
                                   AlertDialog(
                                       title: Text("정상적으로 등록되었습니다.",
                                         style: TextStyle(fontFamily: "Pretendard",fontSize: 20),),
