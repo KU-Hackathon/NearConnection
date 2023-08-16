@@ -73,7 +73,32 @@ class PostAllListController extends ChangeNotifier{
     currentPageNo = 2;
     notifyListeners();
   }
+  Future<void> stateTop() async{
+    await _fetchPostTop5();
+}
 
+  Future<List<String>> _fetchPostTop5() async {
+    String base_uri = "http://203.252.139.208:8000/api/board";
+    try{
+      http.Response _response = await http.get(
+          Uri.parse(base_uri),
+          headers: {
+            HttpHeaders.contentTypeHeader: "application/json",
+            HttpHeaders.authorizationHeader: "Bearer $token"}
+      );
+      if(_response.statusCode == 200){
+        List<dynamic> _data = jsonDecode(utf8.decode(_response.bodyBytes));
+        List<String> _result = [_data[0],_data[1],_data[2],_data[3],_data[4]];
+        return _result;
+      }
+      else{
+        return [];
+      }
+    }catch(error){
+      logger.e(error);
+      return [];
+    }
+  }
 
   Future<List<PostList>> _fetchPostList({
     required int pageNo,

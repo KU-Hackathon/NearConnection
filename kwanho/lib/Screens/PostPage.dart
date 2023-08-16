@@ -177,8 +177,7 @@ class _PostPageState extends State<PostPage>{
                                 List<dynamic> data = [controllForTitle.text,controllForContent.text,age,tags];
                                 postRequestController.postRequest(data);
                                 showDialog(context: context, builder: (BuildContext context){
-                                  return
-                                  AlertDialog(
+                                  return  AlertDialog(
                                       title: Text("정상적으로 등록되었습니다.",
                                         style: TextStyle(fontFamily: "Pretendard",fontSize: 20),),
                                       actions: <Widget>[

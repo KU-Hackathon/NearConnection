@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:kwanho/Controller/CommentRequestController.dart';
@@ -5,6 +6,7 @@ import 'package:kwanho/Controller/PostController.dart';
 import 'package:kwanho/Models/postList.dart';
 import 'package:kwanho/MyTheme.dart';
 import 'package:provider/provider.dart';
+import '../Models/Token.dart';
 import '../Models/post.dart';
 import 'reportPage.dart';
 import '../Models/comment.dart';
@@ -41,7 +43,7 @@ class _OpenPostState extends State<OpenPost> {
     child: Consumer<PostController>(builder: (context,state,child) {
       return  Scaffold(
         appBar: AppBar( //상단 바
-          title: Text("${state.post.category}",
+          title: Text("${state.post.category}대 게시판",
             style: TextStyle(fontFamily: 'Pretendard',fontSize: 20),),
           backgroundColor: Color(0xffb3e5fc),
         ),
@@ -69,11 +71,12 @@ class _OpenPostState extends State<OpenPost> {
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.fromLTRB(8, 3, 8, 3),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,//글 제목, 작성자 박스
+                            padding: EdgeInsets.fromLTRB(15, 10, 8, 3),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,//글 제목, 작성자 박스
                               children: [
                                 SizedBox(
+                                  width: double.infinity,
                                   height: 50,
                                   child: Text("${state.post.title}",softWrap: true,
                                     style: TextStyle(
@@ -94,11 +97,15 @@ class _OpenPostState extends State<OpenPost> {
                               ],
                             ),),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                            padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
                             child:  Align(
                               alignment: Alignment.centerLeft,
-                              child: Markdown(
-                                data: state.post.contents,
+                              child: Container(
+                                width: double.infinity,
+                                height: 300,
+                                child: Markdown(
+                                  data: state.post.contents,
+                                ),
                               )),
                           ),//본문 내용
                           Padding(

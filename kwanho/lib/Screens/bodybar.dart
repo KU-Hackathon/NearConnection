@@ -144,7 +144,6 @@ class _ViewsState extends State<Views> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("${Provider.of<USER>(context,listen: true).token}"),
                   Text(
                     "게시판",
                     style: TextStyle(
@@ -216,7 +215,7 @@ class _AllViewState extends State<AllView>{
                 ),
                 padding: EdgeInsets.only(left: 3, right: 3, top: 10),
                 width: double.maxFinite,
-                height: 400,
+                height: 450,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
