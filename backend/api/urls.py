@@ -24,6 +24,8 @@ post_detail = views.PostViewSet.as_view(
 urlpatterns = [
     path('login/', views.LoginView.as_view()),
     path('posts/', post_list),
-    path('posts/', post_upload),
+    path('upload/', post_upload),
     path('posts/<int:pk>/', post_detail),
+    path('like/<int:pk>/', views.LikeView.as_view()),
+    path('comments/<int:pk>/', views.CommentView.as_view()),
 ]

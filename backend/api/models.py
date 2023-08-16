@@ -60,9 +60,9 @@ class Post(BaseModel):
     title = models.CharField(max_length=80)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     content = models.TextField(max_length=5000)
-    tags = models.ManyToManyField(Tag)
-    likes = models.ManyToManyField(Like)
-    comments = models.ManyToManyField(Comment)
+    tags = models.ManyToManyField(Tag, blank=True)
+    likes = models.ManyToManyField(Like, blank=True)
+    comments = models.ManyToManyField(Comment, blank=True)
 
     def __str__(self):
         return f"{self.board}: {self.author}: {self.title}"

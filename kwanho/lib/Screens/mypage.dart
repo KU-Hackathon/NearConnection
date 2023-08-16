@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:kwanho/Models/user.dart';
 import 'package:kwanho/Screens/login.dart';
+import 'package:kwanho/Screens/writtenview.dart';
 import 'package:provider/provider.dart';
+
+import '../Models/post.dart';
+import '../Models/postList.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -50,14 +54,28 @@ class _MyPageState extends State<MyPage> {
               color: Colors.lightBlueAccent,
             ),
             currentAccountPicture:
-                CircleAvatar(backgroundImage: AssetImage("images/user.jpg")),
+                CircleAvatar(backgroundImage: AssetImage("assets/images/user.jpg")),
             accountEmail: Text(""),
             accountName: Text(" ${Provider.of<USER>(context).nickname}",
                 style: TextStyle(fontSize: 20)),
           ),
-          ListTile(title: Text("내가 쓴 게시물"), leading: Icon(Icons.list)),
-          ListTile(title: Text("댓글 단 게시물"), leading: Icon(Icons.list)),
-          ListTile(title: Text("즐겨찾기한 게시물"), leading: Icon(Icons.list)),
+          ListTile(title: Text("내가 쓴 게시물"), leading: Icon(Icons.list),
+            onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WrittenView()));
+          }
+              ),
+              ListTile(title: Text("댓글 단 게시물"), leading: Icon(Icons.list)),
+              ListTile(title: Text("즐겨찾기한 게시물"), leading: Icon(Icons.list)),
+              ListTile(
+              title: Text("로그아웃"),
+              leading: Icon(Icons.logout),
+              onTap: (){
+              Provider.of<USER>(context,listen: false).nickname = null;
+              Provider.of<USER>(context,listen: false).token = null;
+              Provider.of<USER>(context,listen: false).notifyListeners();
+              }
+              )
+
         ],
       ),
     );

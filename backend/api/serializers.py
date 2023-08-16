@@ -41,4 +41,4 @@ class PostPreviewSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['id', 'created_at', 'board', 'title', 'content_preview',
                   'author', 'author_age', 'tags', 'likes', 'comments']
-        read_only_fields = ['created_at', 'board', 'title']
+        read_only_fields = ['created_at']

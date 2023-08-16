@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 
 class USER with ChangeNotifier{
-  USER({this.isLogined=false,required this.nickname,required this.token});
+  USER({required this.nickname,required this.token});
   String? nickname;
-  bool isLogined;
   String? token;
 
-  void Change(){
-    notifyListeners();
+  logout(){
+    this.nickname = null;
+    this.token = null;
   }
 
   fromJson(Map <String,dynamic> JsonData){
