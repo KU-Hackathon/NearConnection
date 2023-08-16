@@ -155,7 +155,7 @@ class _ViewsState extends State<Views> {
                         return Divider();
                       else
                         return ListTile(
-                          title: Row( children: [ SizedBox(width: 120,child: TextTitle1("${_viewnames[realIndex]} 게시판")),SizedBox(width: 10),SizedBox(width: 230,child: TEXT1("아니 진짜 이게 맞아 ㄹㅇ?dddddddddd??", 16),)]),
+                          title: Row( children: [ SizedBox(width: 120,child: TextTitle1("${_viewnames[realIndex]} 게시판")),SizedBox(width: 10),Flexible(child: TEXT1("아니 진짜 이게 맞아 ㄹㅇ?dddddddddd??", 16),)]),
                           onTap: (){
                             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PostViewPage(viewname: _viewnames[realIndex])));
                           },

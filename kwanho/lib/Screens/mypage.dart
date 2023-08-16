@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:kwanho/Models/user.dart';
+import 'package:kwanho/Screens/login.dart';
 
 class MyPage extends StatefulWidget {
   USER? user;
@@ -44,9 +45,16 @@ Drawer loginmypage(USER user) {
 }
 
 Drawer logoutmypage() {
+  Kakao kakao = new Kakao();
   return Drawer(
-    child: DrawerHeader(
-      child: Container()
+    child: ListView(
+      children: [
+        DrawerHeader(child: ElevatedButton(onPressed: () async{
+          OAuthToken? token = await kakao.login();
+          print("${token?.accessToken}");
+        }, child: Text("로그인"))),
+        Text(kakao.get_islogined()),
+      ],
     ),
   );
 }
