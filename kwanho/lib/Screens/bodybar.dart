@@ -32,7 +32,6 @@ class _HotPostViewState extends State<HotPostView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _HotPosts.add(new Post(Catogory: '10대', contents: "와 진짜 실화냐", title: "몬스터가 안차가워"));
   }
   @override
   Widget build(BuildContext context) {
@@ -52,14 +51,14 @@ class _HotPostViewState extends State<HotPostView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TEXT1(_HotPosts[realIndex].Catogory+" 게시판", 16),
+                      TEXT1(_HotPosts[realIndex].category+" 게시판", 16),
                       Row(
                         children: [
                           Icon(Icons.thumb_up,size: 16,),
                           Text("${_HotPosts[realIndex].likes}",style: TextStyle(fontSize: 14),),
                           SizedBox(width: 5,),
                           Icon(Icons.chat,size: 16),
-                          Text("${_HotPosts[realIndex].chats}",style: TextStyle(fontSize: 14)),
+                          Text("${_HotPosts[realIndex].comments}",style: TextStyle(fontSize: 14)),
                         ],
                       ),
                     ],
@@ -185,11 +184,6 @@ class _AllViewState extends State<AllView>{
   void initState() {
     // TODO: implement initState
     super.initState();
-    //get _Posts
-    _Posts.add(new Post(Catogory: '10대', contents: "Contents", title: "title"));
-    _Posts.add(new Post(Catogory: '20대', contents: "Contents", title: "title"));
-    _Posts.add(new Post(Catogory: '30대', contents: "Contents", title: "title"));
-    _Posts.add(new Post(Catogory: '40대', contents: "Contents", title: "title"));
   }
   Widget build(BuildContext context) {
     return Frame(Text(
@@ -233,7 +227,7 @@ class _AllViewState extends State<AllView>{
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("${_Posts[realIndex].Catogory} 게시판",textAlign: TextAlign.start,style: TextStyle(fontSize: 16)),
+                                  Text("${_Posts[realIndex].category} 게시판",textAlign: TextAlign.start,style: TextStyle(fontSize: 16)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
@@ -241,7 +235,7 @@ class _AllViewState extends State<AllView>{
                                       Text("${_Posts[realIndex].likes}",style: TextStyle(fontSize: 14),),
                                       SizedBox(width: 5,),
                                       Icon(Icons.chat,size: 16),
-                                      Text("${_Posts[realIndex].chats}",style: TextStyle(fontSize: 14)),
+                                      Text("${_Posts[realIndex].comments}",style: TextStyle(fontSize: 14)),
                                     ],
                                   ),
                                 ],
@@ -249,7 +243,7 @@ class _AllViewState extends State<AllView>{
                             ],
                           ),
                           onTap: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PostViewPage(viewname: _Posts[realIndex].Catogory)));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PostViewPage(viewname: _Posts[realIndex].category)));
                           },
                         );
                     },
