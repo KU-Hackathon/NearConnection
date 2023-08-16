@@ -1,6 +1,6 @@
 import requests
 from django.http import Http404
-from drf_spectacular.utils import extend_schema, OpenApiParameter, inline_serializer, OpenApiResponse
+from drf_spectacular.utils import extend_schema, OpenApiParameter, inline_serializer
 from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.pagination import PageNumberPagination
@@ -9,7 +9,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .serializers import *
-from .models import Profile
 
 CLIENT_ID = '746a07f94d32e9cefc8e8987441808df'
 
