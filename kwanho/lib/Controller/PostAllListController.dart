@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 
 import 'package:http/http.dart' as http;
 import '../Models/Token.dart';
+import '../Models/post.dart';
 
 var logger = Logger(
   printer: PrettyPrinter(),
@@ -13,6 +14,7 @@ var logger = Logger(
 
 class PostAllListController extends ChangeNotifier{
   List<PostList> postList = [];
+  List<PostList> postLead = [];
   int currentPageNo = 1;
   bool isAdd = false;
   Token token = Token();
@@ -72,6 +74,7 @@ class PostAllListController extends ChangeNotifier{
     currentPageNo = 2;
     notifyListeners();
   }
+
 
   Future<List<PostList>> _fetchPostList({
     required int pageNo,
