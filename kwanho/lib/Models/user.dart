@@ -1,5 +1,6 @@
 
 class USER{
-  USER({required this.nickname});
+  USER({this.isLogined=false,required this.nickname});
   final String nickname;
+  final bool isLogined;
 }

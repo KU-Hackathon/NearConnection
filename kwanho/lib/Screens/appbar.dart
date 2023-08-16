@@ -13,9 +13,7 @@ AppBar HotPostBar()
   );
 }
 AppBar AlarmBar(){
-  return AppBar(title: const Text( "알림",style: TextStyle(color: Colors.white),),
-    actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
-  );
+  return AppBar(title: const Text( "알림",style: TextStyle(color: Colors.white),));
 }
 AppBar SettingBar(){
   return AppBar(title: const Text( "설정",style: TextStyle(color: Colors.white),),

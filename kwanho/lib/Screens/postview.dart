@@ -23,7 +23,7 @@ class _PostViewPageState extends State<PostViewPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _posts.add(new Post(likes: 10, chats: 20, contents: "contents", title: "title"));
+    _posts.add(new Post(Catogory: viewname,likes: 10, chats: 20, contents: "contents", title: "title"));
   }
 
   _PostViewPageState({required this.viewname});
