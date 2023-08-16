@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:kwanho/Controller/CommentRequestController.dart';
 import 'package:kwanho/Controller/PostController.dart';
 import 'package:kwanho/Models/postList.dart';
@@ -96,9 +97,9 @@ class _OpenPostState extends State<OpenPost> {
                             padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                             child:  Align(
                               alignment: Alignment.centerLeft,
-                              child: Text("${state.post.contents}",
-                                textAlign: TextAlign.left,
-                                softWrap: true,),),
+                              child: Markdown(
+                                data: state.post.contents,
+                              )),
                           ),//본문 내용
                           Padding(
                             padding: EdgeInsets.fromLTRB(5, 30, 5, 5),
