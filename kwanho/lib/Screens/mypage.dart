@@ -5,7 +5,7 @@ import 'package:kwanho/Models/user.dart';
 import 'package:kwanho/Screens/login.dart';
 import 'package:kwanho/Screens/writtenview.dart';
 import 'package:provider/provider.dart';
-
+import '../Models/Token.dart' as RealToken;
 import '../Models/post.dart';
 import '../Models/postList.dart';
 
@@ -36,6 +36,7 @@ class _MyPageState extends State<MyPage> {
                             "access_token": token?.accessToken
                           });
                       user = user.fromJson(response.data);
+                      RealToken.token = user.token;
                       Provider.of<USER>(context,listen: false).token = user.token;
                       Provider.of<USER>(context,listen: false).nickname = user.nickname;
                       Provider.of<USER>(context,listen: false).notifyListeners();
@@ -70,6 +71,7 @@ class _MyPageState extends State<MyPage> {
               title: Text("로그아웃"),
               leading: Icon(Icons.logout),
               onTap: (){
+                RealToken.token = null;
               Provider.of<USER>(context,listen: false).nickname = null;
               Provider.of<USER>(context,listen: false).token = null;
               Provider.of<USER>(context,listen: false).notifyListeners();

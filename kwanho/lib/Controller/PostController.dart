@@ -16,7 +16,6 @@ class PostController extends ChangeNotifier{
   Post post = new Post(id: 0, author: [], author_age: 0, title: "null", contents: "null", comments: [], likes: 0, category: "null");
   int currentPageNo = 1;
   bool isAdd = false;
-  Token token = Token();
 
   Future<void> stated({required int postId}) async{
     await _getPosts(postId: postId);
@@ -34,7 +33,7 @@ class PostController extends ChangeNotifier{
       http.Response _response = await http.get(
           Uri.parse("http://203.252.139.208:8000/api/posts/$postId"),
           headers: {
-            HttpHeaders.authorizationHeader: token.token}
+            HttpHeaders.authorizationHeader: "Bearer $token"}
       );
       try{
       if(_response.statusCode == 200){

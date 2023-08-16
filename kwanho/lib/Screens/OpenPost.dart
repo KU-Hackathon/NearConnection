@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:kwanho/Controller/PostController.dart';
 import 'package:kwanho/Models/postList.dart';
 import 'package:kwanho/MyTheme.dart';
 import 'package:provider/provider.dart';
+import '../Models/Token.dart';
 import '../Models/post.dart';
 import 'reportPage.dart';
 import '../Models/comment.dart';
@@ -104,30 +106,17 @@ class _OpenPostState extends State<OpenPost> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,//좋아요, 신고 버튼 박스
                                 children: [
-                                  ToggleButtons(
-                                      onPressed: (int index){
-                                        setState(() {
-                                          _likeSelected[index] = !_likeSelected[index];
-                                        });
-                                      },
-                                      selectedBorderColor: Color(0xff007bff),
-                                      selectedColor: Colors.white,
-                                      color: Color(0xff007bff),
-                                      isSelected: _likeSelected,
-                                      constraints: const BoxConstraints(
-                                          minHeight: 30,
-                                          minWidth: 60
-                                      ),
-                                      children: const [
-                                        Text(
-                                          '좋아요',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Color(0xff007bff),
-                                          ),
-                                          softWrap: false,
-                                        )]
+                                  Row(
+                                    children: [
+                                      IconButton(onPressed: () async{
+                                        Dio dio = Dio();
+                                        Response response = await dio.post('http://203.252.139.208:8000/api/like/${state.post.id}/',options: Options(headers: {"Authorization":"Bearer $token"}));
+                                        if(response.statusCode== 201){
+                                          state.p
+                                        }
+                                      }, icon: Icon(Icons.thumb_up)),
+                                      TEXT1(state.post.likes.toString(), 14),
+                                    ],
                                   ),
                                   OutlinedButton(
                                       style: OutlinedButton.styleFrom(

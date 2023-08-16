@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:kwanho/Models/Token.dart';
 import 'package:kwanho/Models/postList.dart';
 import 'package:logger/logger.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import '../Models/post.dart';
 
 var logger = Logger(
@@ -56,7 +58,7 @@ class PostByAuthorController extends ChangeNotifier{
           Uri.parse("http://203.252.139.208:8000/api/posts/?author=true"),
           headers: {
             HttpHeaders.contentTypeHeader: "application/json",
-            HttpHeaders.authorizationHeader: "Bearer cc3f30091bec96fd339df5f66f72d3221c2aac10"}
+            HttpHeaders.authorizationHeader: "Bearer $token}"}
       );
       if(_response.statusCode == 200){
         List<dynamic> _data = jsonDecode(utf8.decode(_response.bodyBytes));
