@@ -13,19 +13,21 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext ctx) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "니어커넥션",
       theme: THEME1,
-      initialRoute: '/',
-      routes: {
-        '/': (ctx)=>MainPage(), '/Login':(ctx)=>LoginPage(), '/MyPage':(ctx)=>MyPage(),
-      },
+      home: MainPage(),
     );
   }
 }

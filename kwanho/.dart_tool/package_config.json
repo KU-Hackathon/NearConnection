@@ -62,12 +62,6 @@
       "languageVersion": "2.19"
     },
     {
-      "name": "cupertino_icons",
-      "rootUri": "file:///C:/Users/a/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "dio",
       "rootUri": "file:///C:/Users/a/AppData/Local/Pub/Cache/hosted/pub.dev/dio-5.3.2",
       "packageUri": "lib/",
@@ -126,12 +120,6 @@
       "rootUri": "file:///C:/Users/a/Documents/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.0"
-    },
-    {
-      "name": "fluttertoast",
-      "rootUri": "file:///C:/Users/a/AppData/Local/Pub/Cache/hosted/pub.dev/fluttertoast-8.2.2",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "http",
@@ -458,7 +446,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-08-14T19:13:18.084958Z",
+  "generated": "2023-08-15T19:24:37.163368Z",
   "generator": "pub",
   "generatorVersion": "3.0.6"
 }

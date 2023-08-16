@@ -99,7 +99,7 @@ class _ReportPageState extends State<ReportPage> {
                             side: BorderSide(color: Color(0xffdc3545)),
                             foregroundColor: Color(0xffdc3545)),
                         onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => OpenPost(post: _post)));
+                          Navigator.pop(context);
                         },
                         child: Text(
                           '신고',

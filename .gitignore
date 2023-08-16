@@ -1,1 +1,4 @@
 .idea
+kwanho/android/app/src/main/AndroidManifest.xml
+kwanho/android/app/src/debug/AndroidManifest.xml
+kwanho/android/app/src/profile/AndroidManifest.xml

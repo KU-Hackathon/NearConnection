@@ -16,11 +16,6 @@ public final class GeneratedPluginRegistrant {
   private static final String TAG = "GeneratedPluginRegistrant";
   public static void registerWith(@NonNull FlutterEngine flutterEngine) {
     try {
-      flutterEngine.getPlugins().add(new io.github.ponnamkarthik.toast.fluttertoast.FlutterToastPlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin fluttertoast, io.github.ponnamkarthik.toast.fluttertoast.FlutterToastPlugin", e);
-    }
-    try {
       flutterEngine.getPlugins().add(new com.kakao.sdk.flutter.KakaoFlutterSdkPlugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin kakao_flutter_sdk_common, com.kakao.sdk.flutter.KakaoFlutterSdkPlugin", e);
