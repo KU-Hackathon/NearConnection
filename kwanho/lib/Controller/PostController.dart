@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:kwanho/Models/Token.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -15,6 +16,7 @@ class PostController extends ChangeNotifier{
   Post post = new Post(id: 0, author: [], author_age: 0, title: "null", contents: "null", comments: [], likes: 0, category: "null");
   int currentPageNo = 1;
   bool isAdd = false;
+  Token token = Token();
 
   Future<void> stated({required int postId}) async{
     await _getPosts(postId: postId);
@@ -32,7 +34,7 @@ class PostController extends ChangeNotifier{
       http.Response _response = await http.get(
           Uri.parse("http://203.252.139.208:8000/api/posts/$postId"),
           headers: {
-            HttpHeaders.authorizationHeader: "Bearer cc3f30091bec96fd339df5f66f72d3221c2aac10"}
+            HttpHeaders.authorizationHeader: token.token}
       );
       try{
       if(_response.statusCode == 200){

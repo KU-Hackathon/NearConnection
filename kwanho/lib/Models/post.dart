@@ -7,14 +7,13 @@ class Post{
   final String title;
   final String contents;
   final int likes;
-  final List<dynamic>? comments;
+  final List<dynamic> comments;
   final String category;
   final List<dynamic>? tags;
   
   Post({required this.id,required this.author, required this.author_age ,required this.title, required this.contents,required this.comments,required this.likes, required this.category,this.tags});
 
   Map<String, dynamic> toJson(){
-
     return {
       'id':id,
       'author':author,
@@ -26,7 +25,6 @@ class Post{
       'category':category,
       'tags':tags
     };
-
   }
 
   factory Post.fromJson(Map <String,dynamic> JsonData){

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kwanho/Controller/PostController.dart';
 import 'package:kwanho/Models/postList.dart';
+import 'package:kwanho/MyTheme.dart';
 import 'package:provider/provider.dart';
 import '../Models/post.dart';
 import 'reportPage.dart';
@@ -18,26 +19,33 @@ class OpenPost extends StatefulWidget{
 
 class _OpenPostState extends State<OpenPost> {
   int postId;
-  PostController postController = PostController();
+  TextEditingController controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+  final PostController _postController = PostController();
   _OpenPostState(this.postId);
   List<Comment> _comment = [];
   List<bool> _beforeLikeSelected = [false];
   List<bool> _likeSelected = [false];
+  bool _isCheckedAnonymity = false;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<PostController>(
         create: (_) => PostController()..stated(postId: postId),
     child: Consumer<PostController>(builder: (context,state,child) {
-      return Scaffold(
-        appBar: AppBar( //상단 바
-          title: Text("${state.post.category}대 게시판",
-            style: TextStyle(fontFamily: 'Pretendard',fontSize: 20),),
-          backgroundColor: Color(0xffb3e5fc),
-        ),
-        backgroundColor: Color(0xffffffff),
-        body:
-        ListView(
+      return GestureDetector(
+        onTap: () {
+          _focusNode.unfocus();
+        },
+        child: Scaffold(
+          appBar: AppBar( //상단 바
+            title: Text("${state.post.title}",
+              style: TextStyle(fontFamily: 'Pretendard',fontSize: 20),),
+            backgroundColor: Color(0xffb3e5fc),
+          ),
+          backgroundColor: Color(0xffffffff),
+          body:
+          ListView(
             padding: EdgeInsets.all(5),
             children: [
               Column(
@@ -63,9 +71,9 @@ class _OpenPostState extends State<OpenPost> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,//글 제목, 작성자 박스
                                 children: [
-                                  Flexible(
-                                    child: Text("${state.post.title}",
-                                      softWrap: true,
+                                  SizedBox(
+                                    height: 50,
+                                    child: Text("${state.post.title}",softWrap: true,
                                       style: TextStyle(
                                         fontSize: 20,
                                         color: Color(0xff000000),
@@ -73,7 +81,7 @@ class _OpenPostState extends State<OpenPost> {
                                     ),
                                   ),
                                   SizedBox(
-                                    child: Text("작성자 - 나이대",
+                                    child: Text("${state.post.author} - ${state.post.author_age}대",
                                       style: TextStyle(
                                         fontSize: 13,
                                         color: Color(0xff6c757d),
@@ -143,24 +151,75 @@ class _OpenPostState extends State<OpenPost> {
                         )
                     ),
                     //댓글
-                    Container(
-                        decoration: const BoxDecoration(
-                            border: Border(bottom: BorderSide(color: Colors.black, width: 1))
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(10, 10, 10, 1),
+                      child: Align(alignment: Alignment.centerLeft,
+                        child: Text("댓글",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color(0xff707070),
+                            )
                         ),
-                        child:
-                        const Padding(
-                          padding: EdgeInsets.fromLTRB(10, 10, 10, 1),
-                          child: Align(alignment: Alignment.centerLeft,
-                            child: Text("댓글",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Color(0xff707070),
-                                )
-                            ),
-                          ),
-                        )
+                      ),
                     ),
-                    Padding(//세부 댓글
+                    for (int i = 0; i < (state.post.comments.length); i++)
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Divider(),
+                            Text("${state.post.comments[i]["content"]}",
+                              style: TextStyle(fontSize: 15),),
+                            Text("${state.post.comments[i]["author"]} - ${state.post.comments[i]["author_age"]}대",
+                              style: TextStyle(fontSize: 12),)],),)
+                    //댓글
+                  ]
+              )
+            ],
+          ),
+          bottomNavigationBar: Container(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Checkbox(value: _isCheckedAnonymity, onChanged: (value){
+                  setState(() {
+                    _isCheckedAnonymity = value!;
+                  });
+                }),
+                Align(alignment: Alignment.centerLeft,child: Text("익명")),
+                const Flexible(
+                    child: Padding(padding: EdgeInsets.fromLTRB(1, 6, 1, 6),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: '댓글',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),),
+                        ),
+                      ),)),
+                Padding(padding: EdgeInsets.fromLTRB(1, 6, 1, 10),
+                  child: TextButton(
+                      onPressed: (){},
+                      child: Text(
+                        '등록',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: const Color(0xffdc3545),
+                        ),
+                        softWrap: false,
+                      )),),
+              ],
+            ),
+          )
+        )
+      );
+    }),);
+  }
+}
+
+/*Padding(//세부 댓글
                       padding: EdgeInsets.fromLTRB(1, 5.5, 5.5, 1),
                       child: Container(
                           decoration: BoxDecoration(
@@ -187,16 +246,6 @@ class _OpenPostState extends State<OpenPost> {
                             ),
                           )
                       ),
-                    ), //댓글
-                  ]
-              )
-            ]
-        ),
-        bottomNavigationBar: PostComment(),
-      );
-    }),);
-  }
-}
-
+                    )*/
 
 

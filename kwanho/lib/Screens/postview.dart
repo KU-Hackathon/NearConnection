@@ -14,13 +14,12 @@ class PostViewPage extends StatefulWidget {
   PostViewPage({required this.viewname});
 
   @override
-  State<PostViewPage> createState() => _PostViewPageState(viewname: this.viewname);
+  _PostViewPageState createState() => _PostViewPageState(viewname: this.viewname);
 }
 
 class _PostViewPageState extends State<PostViewPage> {
   final String viewname;
   PostAllListController postController = PostAllListController();
-  List<Post> posts = [];
 
   @override
   void initState() {
@@ -32,35 +31,38 @@ class _PostViewPageState extends State<PostViewPage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<PostAllListController>(
-        create: (_) => PostAllListController()..statedList(),
+        create: (_) => PostAllListController()..statedList(viewname),
         child: Consumer<PostAllListController>(builder: (context,state,child){
           return Scaffold(
-            appBar: AppBar(title: Text("$viewname 게시판"),),
+            appBar: AppBar(title: Text("$viewname대 게시판"),),
             body: NotificationListener<ScrollUpdateNotification>(
               onNotification: (ScrollUpdateNotification notification){
-                state.scrollListener(notification);
+                state.scrollListenerByBoard(notification,viewname);
                 return false;
               },
               child: ListView.builder(
-                itemCount:posts.length*2,
+                itemCount:state.postList.length*2,
                 itemBuilder: (context, index){
                   var realIndex = index ~/ 2;
                   if(index.isOdd) return Divider();
-                  else return ListTile( title: TextTitle1("${posts[realIndex].title}"),
-                    subtitle: Column(children: [
-                      TEXT1("${posts[realIndex].contents}", 16),
+                  else return ListTile(
+                    title: TextTitle1("${state.postList[realIndex].title}"),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                      TEXT1("${state.postList[realIndex].contentsPreview}", 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Icon(Icons.thumb_up,size: 14,),
-                          Text("${posts[realIndex].likes}",style: TextStyle(fontSize: 14),),
+                          Text("${state.postList[realIndex].likes}",style: TextStyle(fontSize: 14),),
                           Icon(Icons.chat,size: 14),
-                          Text("${posts[realIndex].comments}",style: TextStyle(fontSize: 14)),
+                          Text("${state.postList[realIndex].comments}",style: TextStyle(fontSize: 14)),
                         ],
                       )
                     ],),
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>OpenPost(postId: posts[realIndex].id)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>OpenPost(postId: state.postList[realIndex].id)));
                     },
                   );
                 },),
