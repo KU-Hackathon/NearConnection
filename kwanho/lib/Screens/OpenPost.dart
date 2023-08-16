@@ -202,7 +202,6 @@ class _OpenPostState extends State<OpenPost> {
                           if(_formKey.currentState!.validate()) {
                             commentRequestController.commentRequest([state.post.id,controllForContent.text]);
                             controllForContent.text = "";
-                            setState(() {});
                           }
                         },
                         child: Text(
