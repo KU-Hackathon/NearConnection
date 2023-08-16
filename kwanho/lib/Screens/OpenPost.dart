@@ -109,11 +109,9 @@ class _OpenPostState extends State<OpenPost> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,//좋아요, 신고 버튼 박스
                                 children: [
-                                  ToggleButtons(
-                                      onPressed: (int index){
-                                        setState(() {
-                                          _likeSelected[index] = !_likeSelected[index];
-                                        });
+                                  OutlinedButton(
+                                    style: OutlineButton.styleFrom
+                                      onPressed: (){
                                       },
                                       selectedBorderColor: Color(0xff007bff),
                                       selectedColor: Colors.white,
@@ -123,7 +121,7 @@ class _OpenPostState extends State<OpenPost> {
                                           minHeight: 30,
                                           minWidth: 60
                                       ),
-                                      children: const [
+                                      child : const
                                         Text(
                                           '좋아요',
                                           textAlign: TextAlign.center,
@@ -132,7 +130,7 @@ class _OpenPostState extends State<OpenPost> {
                                             color: Color(0xff007bff),
                                           ),
                                           softWrap: false,
-                                        )]
+                                        )
                                   ),
                                   OutlinedButton(
                                       style: OutlinedButton.styleFrom(
