@@ -20,13 +20,12 @@ class CommentSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     author = ProfileSerializer(read_only=True)
     tags = serializers.StringRelatedField(many=True)
-    likes = serializers.IntegerField(source='len(comments)', read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
         fields = ['id', 'created_at', 'updated_at', 'board', 'title', 'author',
-                  'content', 'tags', 'likes', 'comments']
+                  'content', 'tags', 'likes_count', 'comments']
         read_only_fields = ['created_at', 'updated_at']
         lookup_field = 'title'
 

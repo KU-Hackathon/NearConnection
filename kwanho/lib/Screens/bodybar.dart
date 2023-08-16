@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:kwanho/Controller/PostAllListController.dart';
 import 'package:kwanho/Models/post.dart';
 import 'package:kwanho/Models/postList.dart';
+import 'package:kwanho/Models/user.dart';
 import 'package:kwanho/Screens/OpenPost.dart';
 import 'package:kwanho/Screens/postAllview.dart';
 import 'package:kwanho/Screens/postview.dart';
@@ -152,6 +153,7 @@ class _ViewsState extends State<Views> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text("${Provider.of<USER>(context,listen: true).token}"),
               t, // title
               SizedBox(height: 15),
               Expanded(
