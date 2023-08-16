@@ -13,7 +13,7 @@ class Profile(BaseModel):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     kakao_id = models.PositiveIntegerField()
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=20)
     age = models.PositiveIntegerField()
     point = models.IntegerField(default=100)
 
