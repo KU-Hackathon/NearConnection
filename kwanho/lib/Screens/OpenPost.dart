@@ -31,7 +31,7 @@ class _OpenPostState extends State<OpenPost> {
     child: Consumer<PostController>(builder: (context,state,child) {
       return Scaffold(
         appBar: AppBar( //상단 바
-          title: Text("${state.post.title}",
+          title: Text("${state.post.category}대 게시판",
             style: TextStyle(fontFamily: 'Pretendard',fontSize: 20),),
           backgroundColor: Color(0xffb3e5fc),
         ),
@@ -63,9 +63,9 @@ class _OpenPostState extends State<OpenPost> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,//글 제목, 작성자 박스
                                 children: [
-                                  SizedBox(
-                                    height: 50,
+                                  Flexible(
                                     child: Text("${state.post.title}",
+                                      softWrap: true,
                                       style: TextStyle(
                                         fontSize: 20,
                                         color: Color(0xff000000),

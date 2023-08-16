@@ -144,7 +144,7 @@ class _ViewsState extends State<Views> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("${Provider.of<USER>(context).nickname}"),
+              Text("${Provider.of<USER>(context,listen: true).token}"),
               t, // title
               SizedBox(height: 15),
               Expanded(
