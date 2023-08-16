@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:kwanho/Models/user.dart';
+import 'package:provider/provider.dart';
 import 'MyTheme.dart';
 import 'Screens/OpenPost.dart';
 import 'Screens/login.dart';
@@ -27,11 +29,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext ctx) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "니어커넥션",
-      theme: THEME1,
-      home: MainPage(),
+    return ChangeNotifierProvider(
+      create: (context)=> USER(nickname: null, token: null),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "니어커넥션",
+        theme: THEME1,
+        home: MainPage(),
+      ),
     );
   }
 }

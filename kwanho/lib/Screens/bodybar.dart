@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:kwanho/Models/post.dart';
 import 'package:kwanho/Screens/OpenPost.dart';
 import 'package:kwanho/Screens/postview.dart';
+import 'package:provider/provider.dart';
 
 import '../MyTheme.dart';
 
 Widget Home(){
     return ListView(
       children: [
-        const SizedBox(height: 5,),
         AllView(),
         const SizedBox(height: 5,),
         Views(),

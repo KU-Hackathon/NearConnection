@@ -27,7 +27,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: _selected_index == 0 ? MyPage(user: _user,) : null,
+      drawer: _selected_index == 0 ? MyPage() : null,
       appBar: AppBar_list[_selected_index],
       body: Body_list[_selected_index],
       bottomNavigationBar: BottomNavigationBar(
