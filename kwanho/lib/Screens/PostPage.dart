@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kwanho/Screens/postAllview.dart';
 import './postview.dart';
+import '../Controller/PostRequestController.dart';
 
 class PostPage extends StatefulWidget{
   PostPage();
@@ -11,10 +12,14 @@ class PostPage extends StatefulWidget{
 class _PostPageState extends State<PostPage>{
 
   final _formKey = GlobalKey<FormState>();
+  TextEditingController controllForTitle = TextEditingController();
+  TextEditingController controllForContent = TextEditingController();
+  TextEditingController controllForTags = TextEditingController();
   List<String> _ageType = ['10대','20대','30대','40대','50대~'];
   String _ageDefault = '10대';
   bool _isCheckedAnonymity = false;
   bool _isCheckedQuestion = false;
+  PostRequestController postRequestController = PostRequestController();
 
   _PostPageState();
 
@@ -63,6 +68,7 @@ class _PostPageState extends State<PostPage>{
                           children: [
                             Align(alignment: Alignment.centerLeft,child: Text("제목"),),
                             TextFormField(
+                              controller: controllForTitle,
                               validator: (value){
                                 if (value == null || value.isEmpty){
                                   return "제목은 필수 입력값입니다.";
@@ -80,6 +86,7 @@ class _PostPageState extends State<PostPage>{
                         children: [
                           Align(alignment: Alignment.centerLeft,child: Text("내용")),
                           TextFormField(
+                            controller: controllForContent,
                             validator: (value){
                               if (value == null || value.isEmpty){
                                 return "내용은 필수 입력값입니다.";
@@ -121,7 +128,9 @@ class _PostPageState extends State<PostPage>{
                       child: Column(
                         children: [
                           Align(alignment: Alignment.centerLeft,child: Text("태그")),
-                          TextField()
+                          TextField(
+                            controller: controllForTags,
+                          )
                         ],
                       ),
                     ),
@@ -162,7 +171,29 @@ class _PostPageState extends State<PostPage>{
                                 foregroundColor: Color(0xff007bff)),
                             onPressed: (){
                               if(_formKey.currentState!.validate()){
-                                Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>PostAllViewPage()));
+                                List<String> tags = controllForTags.text.split("#");
+                                String age = _ageDefault.substring(0,2);
+                                List<dynamic> data = [controllForTitle.text,controllForContent.text,age,tags];
+                                if(PostRequestController().postRequest(data) == 201){
+                                  AlertDialog(
+                                    title: Text("정상적으로 등록되었습니다.",
+                                      style: TextStyle(fontFamily: "Pretendard",fontSize: 20),),
+                                    actions: <Widget>[
+                                      TextButton(onPressed: () {Navigator.pop(context,true);},
+                                        child: Text("확인"),)
+                                    ],
+                                  );
+                                }
+                                else{
+                                  AlertDialog(
+                                    title: Text("오류가 발생했습니다",
+                                      style: TextStyle(fontFamily: "Pretendard",fontSize: 20),),
+                                    actions: <Widget>[
+                                      TextButton(onPressed: () {},
+                                        child: Text("확인"),)
+                                    ],
+                                  );
+                                }
                               }
                             },
                             child: Text(

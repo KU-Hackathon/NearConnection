@@ -1,6 +1,3 @@
-import 'dart:js_interop';
-
-import 'package:http/http.dart';
 
 class PostList{
   final int id;
