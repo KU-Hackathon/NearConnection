@@ -1,5 +1,5 @@
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class USER with ChangeNotifier{
   USER({this.isLogined=false,required this.nickname,required this.token});
@@ -14,7 +14,7 @@ class USER with ChangeNotifier{
   fromJson(Map <String,dynamic> JsonData){
     return USER(
         nickname: JsonData['name'],
-        token: JsonData['user_token']);
+        token: JsonData['token']);
   }
 
 }

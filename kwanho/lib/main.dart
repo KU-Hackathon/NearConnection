@@ -29,14 +29,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext ctx) {
-    return ChangeNotifierProvider(
-      create: (context)=> USER(nickname: null, token: null),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "니어커넥션",
-        theme: THEME1,
-        home: MainPage(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "니어커넥션",
+      theme: THEME1,
+      home: MainPage(),
     );
   }
 }

@@ -18,7 +18,6 @@ class MainPage extends StatefulWidget {
 
 
 class _MainPageState extends State<MainPage> {
-  USER? _user = null;
   @override
 
   int _selected_index = 0;
@@ -26,27 +25,30 @@ class _MainPageState extends State<MainPage> {
   List<Widget> Body_list = [Home(),HotPostView(),Alarm(),Setting()];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: _selected_index == 0 ? MyPage() : null,
-      appBar: AppBar_list[_selected_index],
-      body: Body_list[_selected_index],
-      bottomNavigationBar: BottomNavigationBar(
+    return ChangeNotifierProvider(
+      create: (_) => USER(token: null,nickname: null),
+      child: Scaffold(
+        drawer: _selected_index == 0 ?  MyPage() : null,
+        appBar: AppBar_list[_selected_index],
+        body: Body_list[_selected_index],
+        bottomNavigationBar: BottomNavigationBar(
 
-        onTap: (int index){
-          setState(() {
-            _selected_index = index;
-          });
-        },
-        type:BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.blueAccent,
-        unselectedItemColor: Colors.blueGrey,
-        currentIndex: _selected_index,
-        iconSize: 24,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+          onTap: (int index){
+            setState(() {
+              _selected_index = index;
+            });
+          },
+          type:BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.blueAccent,
+          unselectedItemColor: Colors.blueGrey,
+          currentIndex: _selected_index,
+          iconSize: 24,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
 
-        items: botlist,
+          items: botlist,
 
+        ),
       ),
     );
   }

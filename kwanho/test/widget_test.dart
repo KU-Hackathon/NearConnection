@@ -10,21 +10,12 @@ class BottomSheetApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Container> conlist = [];
-
+    for (int i=0;i<100;i++) conlist.add(Container(child: Text("$i",textScaleFactor: 10,),));
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Bottom Sheet Sample')),
-        body: PageView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: conlist.length,
-          pageSnapping: true,
-          itemBuilder: (context, index) {
-            if(index==conlist.length){
-              for(int i = conlist.length;i<10;i++){
-                conlist.add(Container(child: Text("$i",textScaleFactor: 10,),));
-              }
-            }
-          return Center(child: conlist[index]);
+        body: PageView.builder(itemBuilder: (context, index) {
+          return conlist[index];
         },),
         bottomNavigationBar: BottomAppBar(
           height: 40,
