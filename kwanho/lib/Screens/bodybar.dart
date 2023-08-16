@@ -7,13 +7,13 @@ import 'package:kwanho/Models/postList.dart';
 import 'package:kwanho/Screens/OpenPost.dart';
 import 'package:kwanho/Screens/postAllview.dart';
 import 'package:kwanho/Screens/postview.dart';
+import 'package:provider/provider.dart';
 
 import '../MyTheme.dart';
 
 Widget Home(){
     return ListView(
       children: [
-        const SizedBox(height: 5,),
         AllView(),
         const SizedBox(height: 5,),
         Views(),
@@ -156,7 +156,7 @@ class _ViewsState extends State<Views> {
                         return Divider();
                       else
                         return ListTile(
-                          title: Row( children: [ SizedBox(width: 120,child: TextTitle1("${_viewnames[realIndex]} 게시판")),SizedBox(width: 10),SizedBox(width: 230,child: TEXT1("아니 진짜 이게 맞아 ㄹㅇ?dddddddddd??", 16),)]),
+                          title: Row( children: [ SizedBox(width: 120,child: TextTitle1("${_viewnames[realIndex]} 게시판")),SizedBox(width: 10),Flexible(child: TEXT1("아니 진짜 이게 맞아 ㄹㅇ?dddddddddd??", 16),)]),
                           onTap: (){
                             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PostViewPage(viewname: _viewnames[realIndex])));
                           },

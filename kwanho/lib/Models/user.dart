@@ -1,6 +1,20 @@
 
-class USER{
-  USER({this.isLogined=false,required this.nickname});
-  final String nickname;
-  final bool isLogined;
+import 'package:flutter/cupertino.dart';
+
+class USER with ChangeNotifier{
+  USER({this.isLogined=false,required this.nickname,required this.token});
+  String? nickname;
+  bool isLogined;
+  String? token;
+
+  void Change(){
+    notifyListeners();
+  }
+
+  fromJson(Map <String,dynamic> JsonData){
+    return USER(
+        nickname: JsonData['name'],
+        token: JsonData['user_token']);
+  }
+
 }
