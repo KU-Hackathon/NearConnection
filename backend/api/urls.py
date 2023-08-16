@@ -22,7 +22,7 @@ post_detail = views.PostViewSet.as_view(
 )
 
 urlpatterns = [
-    # path('login', views.LoginView.as_view()),
+    path('login/', views.LoginView.as_view()),
     path('posts/', post_list),
     path('posts/', post_upload),
     path('posts/<int:pk>/', post_detail),

@@ -1,6 +1,6 @@
 import requests
 from django.http import Http404
-from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.utils import extend_schema, OpenApiParameter, inline_serializer, OpenApiResponse
 from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.pagination import PageNumberPagination
@@ -35,20 +35,32 @@ class PostPreviewSet(viewsets.ModelViewSet):
 
     @extend_schema(
         parameters=[
-            OpenApiParameter(
-                name='board',
-                type=str,
-                location=OpenApiParameter.QUERY
-            )
+            OpenApiParameter(name='board', type=str)
         ]
     )
     def list(self, request, *args, **kwargs):
-        super().list(request, *args, **kwargs)
+        return super().list(request, *args, **kwargs)
 
 
 class LoginView(APIView):
+    @extend_schema(
+        parameters=[
+            OpenApiParameter('access_token', str, required=True)
+        ],
+        responses={
+            201: inline_serializer(
+                name='s',
+                fields={
+                    'user_token': serializers.CharField(),
+                    'name': serializers.CharField()
+                }
+            )
+        }
+    )
     def post(self, request):
-        access_token = request.data['access_token']
+        access_token = request.GET.get('access_token')
+        if access_token is None:
+            raise Http404('access_token이 주어지지 않았습니다.')
         kakao_user_api = 'https://kapi.kakao.com/v2/user/me'
         response = requests.get(kakao_user_api, headers={'authorization': f'Bearer ${access_token}'})
         if not response.ok:
@@ -57,12 +69,13 @@ class LoginView(APIView):
 
         try:
             user = Profile.objects.get(kakao_id=kakao_id).user
+            token = Token.objects.get(user=user)
         except Profile.DoesNotExist:
             user = User.objects.create(username=f'kakao{kakao_id}')
-            profile = Profile(user=user, kakao_id=kakao_id, name='TEST', age=20)
+            token = Token.objects.create(user=user)
+            profile = Profile(user=user, kakao_id=kakao_id, name=user.username, age=20)
 
             user.save()
             profile.save()
 
-        token = Token.objects.create(user=user)
-        return Response({'token': token.key})
+        return Response({'token': token.key, 'name': user.username}, 201)

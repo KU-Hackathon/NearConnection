@@ -71,6 +71,14 @@ class Post(BaseModel):
     def content_preview(self) -> str:
         return (self.content[:25] + "…") if len(str(self.content)) > 25 else self.content
 
+    @property
+    def likes_count(self) -> int:
+        return len(self.likes.all())
+
+    @property
+    def comments_count(self) -> int:
+        return len(self.comments.all())
+
 
 class Report(BaseModel):
     created_at = models.DateTimeField(auto_now_add=True)

@@ -35,8 +35,8 @@ class PostPreviewSerializer(serializers.ModelSerializer):
     author = serializers.CharField(source='author.name', read_only=True)
     author_age = serializers.IntegerField(source='author.age', read_only=True)
     tags = serializers.StringRelatedField(many=True)
-    likes = serializers.IntegerField(source='len(likes)', read_only=True)
-    comments = serializers.IntegerField(source='len(comments)', read_only=True)
+    likes = serializers.IntegerField(source='likes_count', read_only=True)
+    comments = serializers.IntegerField(source='comments_count', read_only=True)
 
     class Meta:
         model = Post
