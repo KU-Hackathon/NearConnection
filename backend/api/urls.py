@@ -26,5 +26,6 @@ urlpatterns = [
     path('posts/', post_list),
     path('upload/', post_upload),
     path('posts/<int:pk>/', post_detail),
-    path('like/<int:pk>/', views.LikeView.as_view())
+    path('like/<int:pk>/', views.LikeView.as_view()),
+    path('comments/<int:pk>/', views.CommentView.as_view()),
 ]

@@ -121,67 +121,70 @@ class Views extends StatefulWidget {
   const Views({super.key});
 
   @override
-  State<Views> createState() => _ViewsState();
+  _ViewsState createState() => _ViewsState();
 }
 
 class _ViewsState extends State<Views> {
   @override
   final List<String> _viewnames = ["10", "20", "30", "40", "50"];
   Widget build(BuildContext context) {
-    return Frame(Text(
-      "게시판",
-      style: TextStyle(
-          fontSize: 30, fontFamily: "Aggro", fontWeight: FontWeight.normal),
-    ));
-  }
-
-  Widget Frame(Text t) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-      child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(width: 3),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-          width: double.maxFinite,
-          height: 400,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              t, // title
-              SizedBox(height: 15),
-              Expanded(
-                child: Container(
-                  child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: _viewnames.length * 2,
-                    itemBuilder: (context, index) {
-                      var realIndex = index ~/ 2;
-                      if (index.isOdd)
-                        return Divider();
-                      else
-                        return ListTile(
-                          title: Row( children: [
-                            (_viewnames[realIndex] != "50")?
-                            SizedBox(width: 120,child: TextTitle1("${_viewnames[realIndex]}대 게시판"))
-                                :SizedBox(width: 120,child: TextTitle1("${_viewnames[realIndex]}대+ 게시판")),
-                            SizedBox(width: 10),
-                            Flexible(child: TEXT1("아니 진짜 이게 맞아 ㄹㅇ?dddddddddd??", 16),)
-                          ]),
-                          onTap: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PostViewPage(viewname: _viewnames[realIndex])));
-                          },
-                        );
-                    },
-                  ),
-                ),
+    return ChangeNotifierProvider<PostAllListController>(
+      create: (_) => PostAllListController()..statedList(null),
+      child: Consumer<PostAllListController>(builder: (context,state,child){
+        return Padding(
+          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+          child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(width: 3),
+                borderRadius: BorderRadius.circular(10),
               ),
-            ],
-          )
-      ),
+              padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+              width: double.maxFinite,
+              height: 400,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("${Provider.of<USER>(context,listen: true).token}"),
+                  Text(
+                    "게시판",
+                    style: TextStyle(
+                        fontSize: 30, fontFamily: "Aggro", fontWeight: FontWeight.normal),
+                  ), // title
+                  SizedBox(height: 15),
+                  Expanded(
+                    child: Container(
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: _viewnames.length * 2,
+                        itemBuilder: (context, index) {
+                          var realIndex = index ~/ 2;
+                          if (index.isOdd)
+                            return Divider();
+                          else
+                            return ListTile(
+                              title: Row( children: [
+                                (_viewnames[realIndex] != "50")?
+                                SizedBox(width: 120,child: TextTitle1("${_viewnames[realIndex]}대 게시판"))
+                                    :SizedBox(width: 120,child: TextTitle1("${_viewnames[realIndex]}대+ 게시판")),
+                                SizedBox(width: 10),
+                                Flexible(child: TEXT1("아니 진짜 이게 맞아 ㄹㅇ?dddddddddd??", 16),)
+                              ]),
+                              onTap: (){
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PostViewPage(viewname: _viewnames[realIndex])));
+                              },
+                            );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              )
+          ),
+        );
+      },),
     );
   }
+
 }
 
 class AllView extends StatefulWidget {

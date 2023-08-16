@@ -1,6 +1,7 @@
 import json
 
 import requests
+from django.contrib.auth.models import AnonymousUser
 from django.http import Http404
 from drf_spectacular.utils import extend_schema, OpenApiParameter, inline_serializer
 from rest_framework import viewsets
@@ -54,15 +55,17 @@ class PostPreviewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostPreviewSerializer
     permission_classes = [AllowAny]
+    authentication_classes = []
 
     def get_queryset(self):
         board = self.request.GET.get('board')
         query = Post.objects.filter(board=board) if board else Post.objects.all()
-        profile = Profile.objects.get(user=self.request.user)
-        if self.request.GET.get('author'):
-            query = query.filter(author=profile)
-        if self.request.GET.get('commented'):
-            query = query.filter(likes__in=Like.objects.filter(author=profile))
+        if not isinstance(self.request.user, AnonymousUser):
+            profile = Profile.objects.get(user=self.request.user)
+            if self.request.GET.get('author'):
+                query = query.filter(author=profile)
+            if self.request.GET.get('commented'):
+                query = query.filter(likes__in=Like.objects.filter(author=profile))
         query = query.order_by('-created_at')
         return query
 
@@ -77,18 +80,36 @@ class PostPreviewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
 
+class CommentView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        parameters=[OpenApiParameter(name='content', type=str, required=True)],
+        responses={201: None}
+    )
+    def post(self, request, pk: int):
+        post = Post.objects.get(id=pk)
+        profile = Profile.objects.get(user=request.user)
+        post.comments.add(Comment.objects.create(author=profile, content=request.GET['content']))
+        return Response(status=201)
+
+
 class LikeView(APIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(
         parameters=[],
         responses={
-            201: None
+            201: None,
+            409: None
         }
     )
     def post(self, request, pk: int):
         post = Post.objects.get(id=pk)
         profile = Profile.objects.get(user=request.user)
+        for like in post.likes.all():
+            if like.author == profile:
+                return Response(status=409)
         post.likes.add(Like.objects.create(author=profile))
         return Response(status=201)
 
@@ -114,6 +135,9 @@ class LikeView(APIView):
 
 
 class LoginView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
     @extend_schema(
         parameters=[
             OpenApiParameter('access_token', str, required=True)

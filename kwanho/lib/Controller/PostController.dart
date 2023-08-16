@@ -4,6 +4,7 @@ import 'package:kwanho/Models/Token.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../Models/postList.dart';
 import '../Screens/postview.dart';
 import 'package:http/http.dart' as http;
 import '../Models/post.dart';
@@ -26,6 +27,8 @@ class PostController extends ChangeNotifier{
     post = _data;
     notifyListeners();
   }
+
+
 
   Future<Post> _fetchPost({
     required int postId
