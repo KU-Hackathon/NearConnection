@@ -174,7 +174,7 @@ class _PostPageState extends State<PostPage>{
                                 List<String> tags = controllForTags.text.split("#");
                                 String age = _ageDefault.substring(0,2);
                                 List<dynamic> data = [controllForTitle.text,controllForContent.text,age,tags];
-                                if(PostRequestController().postRequest(data) == 201){
+                                if(postRequestController.postRequest(data) == 201) {
                                   AlertDialog(
                                     title: Text("정상적으로 등록되었습니다.",
                                       style: TextStyle(fontFamily: "Pretendard",fontSize: 20),),
@@ -183,8 +183,7 @@ class _PostPageState extends State<PostPage>{
                                         child: Text("확인"),)
                                     ],
                                   );
-                                }
-                                else{
+                                } else {
                                   AlertDialog(
                                     title: Text("오류가 발생했습니다",
                                       style: TextStyle(fontFamily: "Pretendard",fontSize: 20),),
@@ -194,6 +193,7 @@ class _PostPageState extends State<PostPage>{
                                     ],
                                   );
                                 }
+
                               }
                             },
                             child: Text(

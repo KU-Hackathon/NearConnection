@@ -125,7 +125,7 @@ class Views extends StatefulWidget {
   const Views({super.key});
 
   @override
-  State<Views> createState() => _ViewsState();
+  _ViewsState createState() => _ViewsState();
 }
 
 class _ViewsState extends State<Views> {
