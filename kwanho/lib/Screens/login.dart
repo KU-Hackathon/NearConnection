@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               ElevatedButton(
                   onPressed: () async{
-                    token = await _kakao.login();
+                    token  = await _kakao.login();
                     User user = await UserApi.instance.me();
                     print("${user.kakaoAccount}");
                     try{
@@ -74,6 +74,7 @@ class Kakao {
     }
   }
   Future<OAuthToken?> login() async {
+
     if (await isKakaoTalkInstalled()) {
       print("remove");
       try {

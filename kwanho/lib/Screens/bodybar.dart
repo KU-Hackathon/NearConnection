@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:kwanho/Models/post.dart';
+import 'package:kwanho/Screens/OpenPost.dart';
 import 'package:kwanho/Screens/postview.dart';
 
 import '../MyTheme.dart';
@@ -31,7 +32,7 @@ class _HotPostViewState extends State<HotPostView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _HotPosts.add(new Post(Catogory: 'HOT', contents: "와 진짜 실화냐", title: "몬스터가 안차가워"));
+    _HotPosts.add(new Post(Catogory: '10대', contents: "와 진짜 실화냐", title: "몬스터가 안차가워"));
   }
   @override
   Widget build(BuildContext context) {
@@ -43,18 +44,24 @@ class _HotPostViewState extends State<HotPostView> {
             return Divider();
           else
             return ListTile(
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => OpenPost(post: _HotPosts[realIndex]),)),
               title: TextTitle1(_HotPosts[realIndex].title),
               subtitle: Column(
                 children: [
                   TEXT1(_HotPosts[realIndex].contents, 16),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(Icons.thumb_up,size: 16,),
-                      Text("${_HotPosts[realIndex].likes}",style: TextStyle(fontSize: 14),),
-                      SizedBox(width: 5,),
-                      Icon(Icons.chat,size: 16),
-                      Text("${_HotPosts[realIndex].chats}",style: TextStyle(fontSize: 14)),
+                      TEXT1(_HotPosts[realIndex].Catogory+" 게시판", 16),
+                      Row(
+                        children: [
+                          Icon(Icons.thumb_up,size: 16,),
+                          Text("${_HotPosts[realIndex].likes}",style: TextStyle(fontSize: 14),),
+                          SizedBox(width: 5,),
+                          Icon(Icons.chat,size: 16),
+                          Text("${_HotPosts[realIndex].chats}",style: TextStyle(fontSize: 14)),
+                        ],
+                      ),
                     ],
                   )
                 ],
