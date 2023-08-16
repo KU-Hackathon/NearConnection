@@ -13,16 +13,18 @@ class ReportPage extends StatefulWidget{
 
 
 class _ReportPageState extends State<ReportPage> {
-  List<String> _reportType = ['선택','욕설','비방','음란','허위','기타'];
-  String _reportDefault = '선택';
+  List<String> _reportType = ['욕설','비방','음란','허위','기타'];
+  String _reportDefault = '욕설';
   Post _post;
+  final _formKey = GlobalKey<FormState>();
   _ReportPageState(this._post);
   Future<bool> _onBackPressed() async {
     return await showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("나가면 지금까지 작성한 내용은 사라집니다."),
+            title: Text("나가면 지금까지 작성한 내용은 사라집니다.",
+              style: TextStyle(fontSize: 20,fontFamily: "Pretendard"),),
             actions: <Widget>[
               TextButton(onPressed: () {Navigator.pop(context,true);},
                 child: Text("나가기"),),
@@ -40,10 +42,7 @@ class _ReportPageState extends State<ReportPage> {
         onWillPop: _onBackPressed,
         child: Scaffold(
         appBar: AppBar( //상단 바
-          leading: BackButton(
-              onPressed: (){
-                _onBackPressed();}
-          ),
+          leading: BackButton(),
           title: Text("신고 - ${_post.title}",
             style: TextStyle(fontFamily: 'Aggro',fontSize: 30),),
           backgroundColor: const Color(0xffb3e5fc),
@@ -83,12 +82,15 @@ class _ReportPageState extends State<ReportPage> {
                   )), //신고 사유
               Padding(padding: EdgeInsets.fromLTRB(20, 10, 20, 10), //신고 내용
                 child: SizedBox(
-                  child: Column(
-                    children: [
-                      Align(alignment: Alignment.centerLeft,child: Text("신고 내용")),
-                      TextField()
-                    ],
-                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Align(alignment: Alignment.centerLeft,child: Text("신고 내용")),
+                        TextFormField()
+                      ],
+                    ),
+                  )
                 ),),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -99,7 +101,7 @@ class _ReportPageState extends State<ReportPage> {
                             side: BorderSide(color: Color(0xffdc3545)),
                             foregroundColor: Color(0xffdc3545)),
                         onPressed: (){
-                          Navigator.pop(context);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => OpenPost(post: _post)));
                         },
                         child: Text(
                           '신고',

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../Models/post.dart';
 import 'reportPage.dart';
+import '../Models/comment.dart';
+import 'PostComment.dart';
 import 'package:flutter/services.dart';
 
 class OpenPost extends StatefulWidget{
@@ -15,14 +17,16 @@ class _OpenPostState extends State<OpenPost> {
   final Post _post;
   _OpenPostState(this._post);
 
+  List<Comment> _comment = [];
   List<bool> _beforeLikeSelected = [false];
   List<bool> _likeSelected = [false];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar( //상단 바
-          title: Text("게시판 종류",
-            style: TextStyle(fontFamily: 'Aggro',fontSize: 30),),
+          title: Text("${_post.category}",
+            style: TextStyle(fontFamily: 'Pretendard',fontSize: 20),),
           backgroundColor: Color(0xffb3e5fc),
         ),
         backgroundColor: Color(0xffffffff),
@@ -134,11 +138,11 @@ class _OpenPostState extends State<OpenPost> {
                     ),
                     //댓글
                     Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             border: Border(bottom: BorderSide(color: Colors.black, width: 1))
                         ),
                         child:
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.fromLTRB(10, 10, 10, 1),
                           child: Align(alignment: Alignment.centerLeft,
                             child: Text("댓글",
@@ -149,7 +153,6 @@ class _OpenPostState extends State<OpenPost> {
                             ),
                           ),
                         )
-
                     ),
                     Padding(//세부 댓글
                       padding: EdgeInsets.fromLTRB(1, 5.5, 5.5, 1),
@@ -178,69 +181,15 @@ class _OpenPostState extends State<OpenPost> {
                             ),
                           )
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(1, 5.5, 5.5, 1),
-                      child: Container(
-                          decoration: BoxDecoration(
-                              border: Border(bottom: BorderSide(color: Colors.black, width: 0.5))
-                          ),
-                          width: double.infinity,
-                          child: Align(alignment: Alignment.centerLeft,
-                              child: Column(
-                                children: const [
-                                  Text("댓글 내용",softWrap: true,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xff000000),
-                                        height: 1.5,
-                                      )),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(10, 1, 1, 3),
-                                    child: Text("작성자 - 나이대",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Color(0xff6c757d),
-                                      ),),)
-                                ],
-                              )
-                          )
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(1, 5.5, 5.5, 1),
-                      child: Container(
-                          decoration: BoxDecoration(
-                              border: Border(bottom: BorderSide(color: Colors.black, width: 0.5))
-                          ),
-                          width: double.infinity,
-                          child: Align(alignment: Alignment.centerLeft,
-                              child: Column(
-                                children: const [
-                                  Text("댓글 내용",softWrap: true,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xff000000),
-                                        height: 1.5,
-                                      )),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(10, 1, 1, 3),
-                                    child: Text("작성자 - 나이대",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Color(0xff6c757d),
-                                      ),),)
-                                ],
-                              )
-                          )
-                      ),
                     ), //댓글
                   ]
               )
             ]
-        )
+        ),
+        bottomNavigationBar: PostComment(),
     );
   }
 }
+
 
 
