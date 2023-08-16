@@ -17,7 +17,6 @@ class PostAllListController extends ChangeNotifier{
   List<PostList> postLead = [];
   int currentPageNo = 1;
   bool isAdd = false;
-  Token token = Token();
 
   void scrollListener(ScrollUpdateNotification notification){
     if (notification.metrics.maxScrollExtent * 0.85 < notification.metrics.pixels){
@@ -86,7 +85,7 @@ class PostAllListController extends ChangeNotifier{
           Uri.parse(base_uri),
           headers: {
             HttpHeaders.contentTypeHeader: "application/json",
-            HttpHeaders.authorizationHeader: token.token}
+            HttpHeaders.authorizationHeader: "Bearer $token"}
           );
       if(_response.statusCode == 200){
         List<dynamic> _data = jsonDecode(utf8.decode(_response.bodyBytes));

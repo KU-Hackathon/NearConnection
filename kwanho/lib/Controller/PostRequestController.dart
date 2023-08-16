@@ -12,7 +12,6 @@ var logger = Logger(
 );
 
 class PostRequestController {
-  Token token = Token();
 
   Future<dynamic> postRequest(List<dynamic> data) async{
 
@@ -32,7 +31,7 @@ class PostRequestController {
           body: json.encode(data),
           headers: {
             HttpHeaders.contentTypeHeader: "application/json",
-            HttpHeaders.authorizationHeader: token.token
+            HttpHeaders.authorizationHeader: "Bearer $token"
           }
       );
       if(_response.statusCode == 201){
