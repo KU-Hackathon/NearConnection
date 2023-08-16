@@ -1,18 +1,19 @@
+import 'dart:js_interop';
+
 import 'package:http/http.dart';
 
-class Post{
+class PostList{
   final int id;
   final String author;
-  final String authorAge;
+  final int authorAge;
   final String title;
-  final String contents;
   final String contentsPreview;
   final int likes;
   final int comments;
   final String category;
-  final List<String>? tags;
+  final List<dynamic>? tags;
 
-  Post({required this.id,required this.author, required this.authorAge ,required this.title, required this.contents,required this.contentsPreview,required this.comments,required this.likes, required this.category,this.tags});
+  PostList({required this.id,required this.author, required this.authorAge ,required this.title,required this.contentsPreview,required this.comments,required this.likes, required this.category,this.tags});
 
   Map<String, dynamic> toJson(){
 
@@ -21,28 +22,26 @@ class Post{
       'author':author,
       'author_age':authorAge,
       'title':title,
-      'content':contents,
       'content_preview':contentsPreview,
       'comments': comments,
       'likes':likes,
-      'category':category,
+      'board':category,
       'tags':tags
     };
 
   }
 
-  factory Post.fromJson(Map <String,dynamic> JsonData){
-    return Post(
-        id: JsonData['id'],
-        author: JsonData['author'],
-        authorAge: JsonData['author_age'],
-        title: JsonData["title"],
-        contents: JsonData["content"],
-        contentsPreview: JsonData["content_preview"],
-        comments: JsonData['comments'],
-        likes: JsonData['like'],
-        category: JsonData["category"],
-        tags: JsonData['tags']);
+  factory PostList.fromJson(Map <String,dynamic> jsonData){
+    return PostList(
+        id: jsonData['id'],
+        author: jsonData['author'],
+        authorAge: jsonData['author_age'],
+        title: jsonData["title"],
+        contentsPreview: jsonData["content_preview"],
+        comments: jsonData['comments'],
+        likes: jsonData['likes'],
+        category: jsonData["board"],
+        tags: jsonData['tags']);
   }
 }
 

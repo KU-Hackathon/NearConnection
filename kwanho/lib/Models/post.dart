@@ -2,14 +2,14 @@ import 'package:http/http.dart';
 
 class Post{
   final int id;
-  final String author;
-  final String author_age;
+  final dynamic author;
+  final int author_age;
   final String title;
   final String contents;
   final int likes;
-  final int comments;
+  final List<dynamic>? comments;
   final String category;
-  final List<String>? tags;
+  final List<dynamic>? tags;
   
   Post({required this.id,required this.author, required this.author_age ,required this.title, required this.contents,required this.comments,required this.likes, required this.category,this.tags});
 
@@ -32,20 +32,20 @@ class Post{
   factory Post.fromJson(Map <String,dynamic> JsonData){
     return Post(
         id: JsonData['id'],
-        author: JsonData['author'],
-        author_age: JsonData['author_age'],
+        author: JsonData['author']['name'],
+        author_age: JsonData['author']['age'],
         title: JsonData["title"],
         contents: JsonData["content"],
         comments: JsonData['comments'],
-        likes: JsonData['like'],
-        category: JsonData["category"],
+        likes: JsonData['likes_count'],
+        category: JsonData["board"],
         tags: JsonData['tags']);
   }
 }
 
 class ALARM{
   final String comment;
-  final String Catogory;
+  final String Category;
   final String title;
-  ALARM({required this.title, required this.Catogory,required this.comment});
+  ALARM({required this.title, required this.Category,required this.comment});
 }

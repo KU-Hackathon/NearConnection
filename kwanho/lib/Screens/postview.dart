@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kwanho/Controller/PostController.dart';
+import 'package:kwanho/Controller/PostAllListController.dart';
 import 'package:kwanho/Screens/OpenPost.dart';
 import 'package:provider/provider.dart';
-import '../Controller/PostController.dart';
 
 import '../Models/post.dart';
 import '../MyTheme.dart';
@@ -20,7 +19,7 @@ class PostViewPage extends StatefulWidget {
 
 class _PostViewPageState extends State<PostViewPage> {
   final String viewname;
-  PostController postController = PostController();
+  PostAllListController postController = PostAllListController();
   List<Post> posts = [];
 
   @override
@@ -32,14 +31,14 @@ class _PostViewPageState extends State<PostViewPage> {
   _PostViewPageState({required this.viewname});
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<PostController>(
-        create: (_) => PostController()..stated(category: viewname),
-        child: Consumer<PostController>(builder: (context,state,child){
+    return ChangeNotifierProvider<PostAllListController>(
+        create: (_) => PostAllListController()..statedList(),
+        child: Consumer<PostAllListController>(builder: (context,state,child){
           return Scaffold(
             appBar: AppBar(title: Text("$viewname 게시판"),),
             body: NotificationListener<ScrollUpdateNotification>(
               onNotification: (ScrollUpdateNotification notification){
-                state.scrollListener(notification, viewname);
+                state.scrollListener(notification);
                 return false;
               },
               child: ListView.builder(
@@ -61,7 +60,7 @@ class _PostViewPageState extends State<PostViewPage> {
                       )
                     ],),
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>OpenPost(post: posts[realIndex])));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>OpenPost(postId: posts[realIndex].id)));
                     },
                   );
                 },),

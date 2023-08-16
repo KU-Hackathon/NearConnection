@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:logger/logger.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -11,60 +12,40 @@ var logger = Logger(
 );
 
 class PostController extends ChangeNotifier{
-  List<Post> post = [];
+  Post post = new Post(id: 0, author: [], author_age: 0, title: "null", contents: "null", comments: [], likes: 0, category: "null");
   int currentPageNo = 1;
   bool isAdd = false;
 
-  void scrollListener(ScrollUpdateNotification notification,String category){
-    if (notification.metrics.maxScrollExtent * 0.85 < notification.metrics.pixels){
-      _morePosts(category: category);
-    }
+  Future<void> stated({required int postId}) async{
+    await _getPosts(postId: postId);
   }
 
-  Future<void> _morePosts ({required String category}) async {
-    if(!isAdd){
-      isAdd = true;
-      notifyListeners();
-      List<Post>? _data  = await _fetchPost(pageNo: currentPageNo, category: category);
-      Future.delayed(const Duration(milliseconds: 1000), (){
-        post.addAll(_data);
-        currentPageNo += 1;
-        isAdd = false;
-        notifyListeners();
-      });
-    }
-  }
-
-  Future<void> stated({required String category}) async{
-    await _getPosts(category: category);
-  }
-
-  Future<void> _getPosts({required String category}) async {
-    List<Post>? _data = await _fetchPost(pageNo: currentPageNo,category: category);
+  Future<void> _getPosts({required int postId}) async {
+    Post? _data = await _fetchPost(postId: postId);
     post = _data;
-    currentPageNo = 2;
-    logger.e(currentPageNo);
     notifyListeners();
   }
 
-  Future<List<Post>> _fetchPost({
-    required int pageNo,required String category
+  Future<Post> _fetchPost({
+    required int postId
 }) async {
-    try{
       http.Response _response = await http.get(
-        Uri.parse(""));
+          Uri.parse("http://203.252.139.208:8000/api/posts/$postId"),
+          headers: {
+            HttpHeaders.authorizationHeader: "Bearer cc3f30091bec96fd339df5f66f72d3221c2aac10"}
+      );
+      try{
       if(_response.statusCode == 200){
-        List<dynamic> _data = jsonDecode(_response.body);
-        List<Post> _result =
-            _data.map((e) => Post.fromJson(e)).toList();
-        return _result;
+        Map<String,dynamic> _data = jsonDecode(utf8.decode(_response.bodyBytes));
+        Post result = Post.fromJson(_data);
+        return result;
       }
       else{
-        return [];
+        return Post(id: -1, author: [], author_age: -1, title: "error", contents: "error", comments: [], likes: -1, category: "error");
       }
     }catch(error){
       logger.e(error);
-      return [];
+      return Post(id: -1, author: [], author_age: -1, title: "error", contents: "error", comments: [], likes: -1, category: "error");
     }
   }
 }

@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:html';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:kwanho/Models/postList.dart';
 import 'package:logger/logger.dart';
 
-import '../Screens/postview.dart';
 import 'package:http/http.dart' as http;
 import '../Models/post.dart';
 
@@ -11,23 +13,23 @@ var logger = Logger(
 );
 
 class PostAllListController extends ChangeNotifier{
-  List<Post> post = [];
+  List<PostList> postList = [];
   int currentPageNo = 1;
   bool isAdd = false;
 
   void scrollListener(ScrollUpdateNotification notification){
     if (notification.metrics.maxScrollExtent * 0.85 < notification.metrics.pixels){
-      _morePosts();
+      _morePostsList();
     }
   }
 
-  Future<void> _morePosts () async {
+  Future<void> _morePostsList () async {
     if(!isAdd){
       isAdd = true;
       notifyListeners();
-      List<Post>? _data  = await _fetchPost(pageNo: currentPageNo);
+      List<PostList>? _data  = await _fetchPostList(pageNo: currentPageNo);
       Future.delayed(const Duration(milliseconds: 1000), (){
-        post.addAll(_data);
+        postList.addAll(_data);
         currentPageNo += 1;
         isAdd = false;
         notifyListeners();
@@ -35,28 +37,32 @@ class PostAllListController extends ChangeNotifier{
     }
   }
 
-  Future<void> stated() async{
-    await _getPosts();
+  Future<void> statedList() async{
+    await _getPostsList();
   }
 
-  Future<void> _getPosts() async {
-    List<Post>? _data = await _fetchPost(pageNo: currentPageNo);
-    post = _data;
+  Future<void> _getPostsList() async {
+    List<PostList>? _data = await _fetchPostList(pageNo: currentPageNo);
+    postList = _data;
     currentPageNo = 2;
-    logger.e(currentPageNo);
+    print(currentPageNo);
     notifyListeners();
   }
 
-  Future<List<Post>> _fetchPost({
+  Future<List<PostList>> _fetchPostList({
     required int pageNo
   }) async {
     try{
       http.Response _response = await http.get(
-          Uri.parse("http://203.252.139.208:8000/api_posts_list"));
+          Uri.parse("http://203.252.139.208:8000/api/posts/"),
+          headers: {
+            HttpHeaders.contentTypeHeader: "application/json",
+            HttpHeaders.authorizationHeader: "Bearer cc3f30091bec96fd339df5f66f72d3221c2aac10"}
+          );
       if(_response.statusCode == 200){
-        List<dynamic> _data = jsonDecode(_response.body);
-        List<Post> _result =
-        _data.map((e) => Post.fromJson(e)).toList();
+        List<dynamic> _data = jsonDecode(utf8.decode(_response.bodyBytes));
+        List<PostList> _result =
+        _data.map((e) => PostList.fromJson(e)).toList();
         return _result;
       }
       else{

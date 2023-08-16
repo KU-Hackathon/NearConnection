@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kwanho/Controller/PostController.dart';
+import 'package:kwanho/Models/postList.dart';
+import 'package:provider/provider.dart';
 import '../Models/post.dart';
 import 'reportPage.dart';
 import '../Models/comment.dart';
@@ -6,26 +9,29 @@ import 'PostComment.dart';
 import 'package:flutter/services.dart';
 
 class OpenPost extends StatefulWidget{
-  final Post post;
-  OpenPost({required this.post});
+  final int postId;
+  OpenPost({required this.postId});
 
   @override
-  _OpenPostState createState() => _OpenPostState(post);
+  _OpenPostState createState() => _OpenPostState(postId);
 }
 
 class _OpenPostState extends State<OpenPost> {
-  final Post _post;
-  _OpenPostState(this._post);
-
+  int postId;
+  PostController postController = PostController();
+  _OpenPostState(this.postId);
   List<Comment> _comment = [];
   List<bool> _beforeLikeSelected = [false];
   List<bool> _likeSelected = [false];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ChangeNotifierProvider<PostController>(
+        create: (_) => PostController()..stated(postId: postId),
+    child: Consumer<PostController>(builder: (context,state,child) {
+      return Scaffold(
         appBar: AppBar( //상단 바
-          title: Text("${_post.category}",
+          title: Text("${state.post.title}",
             style: TextStyle(fontFamily: 'Pretendard',fontSize: 20),),
           backgroundColor: Color(0xffb3e5fc),
         ),
@@ -59,7 +65,7 @@ class _OpenPostState extends State<OpenPost> {
                                 children: [
                                   SizedBox(
                                     height: 50,
-                                    child: Text("${_post.title}",
+                                    child: Text("${state.post.title}",
                                       style: TextStyle(
                                         fontSize: 20,
                                         color: Color(0xff000000),
@@ -81,7 +87,7 @@ class _OpenPostState extends State<OpenPost> {
                               padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                               child:  Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text("${_post.contents}",
+                                child: Text("${state.post.contents}",
                                   textAlign: TextAlign.left,
                                   softWrap: true,),),
                             ),//본문 내용
@@ -120,7 +126,7 @@ class _OpenPostState extends State<OpenPost> {
                                           side: BorderSide(color: Color(0xffdc3545)),
                                           foregroundColor: Color(0xffdc3545)),
                                       onPressed: (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => ReportPage(post: _post,)));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => ReportPage(post: state.post)));
                                       },
                                       child: Text(
                                         '신고',
@@ -187,7 +193,8 @@ class _OpenPostState extends State<OpenPost> {
             ]
         ),
         bottomNavigationBar: PostComment(),
-    );
+      );
+    }),);
   }
 }
 

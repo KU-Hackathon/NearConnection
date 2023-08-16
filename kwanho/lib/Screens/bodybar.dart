@@ -3,7 +3,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:kwanho/Models/post.dart';
+import 'package:kwanho/Models/postList.dart';
 import 'package:kwanho/Screens/OpenPost.dart';
+import 'package:kwanho/Screens/postAllview.dart';
 import 'package:kwanho/Screens/postview.dart';
 
 import '../MyTheme.dart';
@@ -27,7 +29,7 @@ class HotPostView extends StatefulWidget {
 }
 
 class _HotPostViewState extends State<HotPostView> {
-  List<Post> _HotPosts = [];
+  List<PostList> _HotPosts = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -43,11 +45,11 @@ class _HotPostViewState extends State<HotPostView> {
             return Divider();
           else
             return ListTile(
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => OpenPost(post: _HotPosts[realIndex]),)),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => OpenPost(postId: _HotPosts[realIndex].id),)),
               title: TextTitle1(_HotPosts[realIndex].title),
               subtitle: Column(
                 children: [
-                  TEXT1(_HotPosts[realIndex].contents, 16),
+                  TEXT1(_HotPosts[realIndex].contentsPreview, 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -84,7 +86,7 @@ class _AlarmState extends State<Alarm> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _alarm.add(new ALARM(title: "와 몬스터가 이제 차가워", Catogory: "20대", comment: "당연히 차갑지"));
+    _alarm.add(new ALARM(title: "와 몬스터가 이제 차가워", Category: "20대", comment: "당연히 차갑지"));
   }
   @override
   Widget build(BuildContext context) {
@@ -207,7 +209,15 @@ class _AllViewState extends State<AllView>{
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              t, // title
+              Row(
+                children: [
+                  t,
+                  TextButton(onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>PostAllViewPage()));
+                  },
+                      child: Text("더보기"))
+                ],
+              ), // title
               SizedBox(height: 15),
               Expanded(
                 child: Container(
